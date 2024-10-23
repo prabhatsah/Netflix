@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import axios from "axios";
-import { API_END_POINT } from "../utils/constant";
+import { API_END_POINT } from "../utils/constant.js";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,17 +18,28 @@ const Login = () => {
     e.preventDefault();
 
     if (isLogin) {
-      const user = { login, password };
+      const user = { email: login, password };
+      console.log(login + ", " + password);
       try {
         const res = await axios.post(`${API_END_POINT}/login`, user);
         console.log(res);
-      } catch (error) {}
+        if (res.data.success) {
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     } else {
-      const user = { fullName, login, password };
+      const user = { fullName, email: login, password };
       try {
         const res = await axios.post(`${API_END_POINT}/register`, user);
         console.log(res);
-      } catch (error) {}
+        if (res.data.success) {
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
 
     setfullName("");
