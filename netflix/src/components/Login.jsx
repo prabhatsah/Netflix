@@ -1,25 +1,81 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginHandler = () => {
+    setIsLogin(!isLogin);
+  };
+
+  const getInputData = (e) => {
+    e.preventDefault();
+    console.log(fullName, email, password);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+  };
+
   return (
     <div>
       <Header />
-      <div>
+      <div className=" ">
         <img
           className="w-[100%] h-[100vh] absolute"
-          src="https://wallpapers.com/images/high/netflix-background-gs7hjuwvv2g0e9fj.webp"
+          src="https://i.pinimg.com/1200x/61/6d/24/616d2453e4e2c6b1ad51197a2f00b8c4.jpg"
           alt="bg-image"
         />
+        <div className="absolute inset-0 bg-black opacity-30"></div>
       </div>
-      <form className="absolute top-[30%] flex left-0 right-0 mx-auto w-3/12 flex-col items-center p-12 bg-black">
-        <h1 className="text-3xl text-white mb-5 font-bold ">SignUp</h1>
+      <form
+        onSubmit={getInputData}
+        className="absolute top-[30%] flex left-0 right-0 mx-auto w-3/12 flex-col items-center p-12 bg-black opacity-90 rounded-md"
+      >
+        <h1 className="text-3xl text-white mb-5 font-bold ">
+          {isLogin ? "Login" : "SignUp"}
+        </h1>
         <div className="flex flex-col ">
-          <input type="text" placeholder="Full Name" className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none"/>
-          <input type="email" placeholder="Email" className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none" />
-          <input type="password" placeholder="Password" className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none" />
+          {!isLogin && (
+            <input
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              type="text"
+              placeholder="Full Name"
+              className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none"
+            />
+          )}
+
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+            className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none"
+          />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+            className="p-3 my-2 rounded-sm bg-gray-800 text-white outline-none"
+          />
+          <button className="bg-red-800 mt-6 p-3 rounded-sm text-white">
+            {isLogin ? "Login" : "SignUp"}
+          </button>
+          <p className="text-white mt-2">
+            {isLogin ? "New to Netflix?" : "Already have an account?"}
+            <span
+              onClick={loginHandler}
+              className="ml-2 text-blue-500 cursor-pointer"
+            >
+              {isLogin ? "Signup" : "Login"}
+            </span>
+          </p>
         </div>
       </form>
     </div>
