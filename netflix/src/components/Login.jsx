@@ -38,6 +38,7 @@ const Login = () => {
           toast.success(res.data.message);
         }
         console.log("Dispatching user data:", res.data.user);
+        console.log("Backend Response:", res.data);
         dispatch(setUser(res.data.user));
         console.log("Dispatched user data to Redux.");
         navigate("/browse");

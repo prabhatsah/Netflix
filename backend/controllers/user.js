@@ -40,6 +40,7 @@ export const Login = async (req, res) => {
       .json({
         message: `Welcome back ${user.fullName}`,
         success: true,
+        user,
       });
   } catch (error) {
     console.log(error);
@@ -84,6 +85,11 @@ export const Register = async (req, res) => {
     return res.status(201).json({
       message: "Account created successfully",
       success: true,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log(error);
