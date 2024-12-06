@@ -2,15 +2,25 @@
 
 import React from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_END_POINT } from "../utils/constant.js";
+import { setUser } from "../redux/userSlice.js";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const user = useSelector((store) => store.app.user);
-  console.log(user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutHandler = async () => {
     try {
-      const user = useSelector((store) => store.app.user);
+      const res = await axios.get(`${API_END_POINT}/logout`);
+      toast.success(res.data.message);
+      console.log(res);
+      dispatch(setUser(null));
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
